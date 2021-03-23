@@ -1,4 +1,4 @@
- EKS - AWS Kubernetes Stack
+# EKS - AWS Kubernetes Stack
 ## Overview
 The concept of this project is to be able to have an easily configurable AWS EKS stack complete with:
 
@@ -13,7 +13,7 @@ This is built using only official Terraform modules & resources, and official He
 ---
 
 ## Warning: This is an untested work in progress. 
-### Do not use this for critical or production systems!¡¡1
+### Do not use this for critical or production systems!
 ### I will not accept any responsibility if everything breaks.
 ### EKS can be very expensive to run depending on node configuration. 
 
@@ -34,8 +34,7 @@ key            = "state/terraform.tfstate" # A directory to where in the bucket 
 encrypt        = true # Encrypt the Terraform state bucket.
 ```
 
-Next, read over and, if you want to customise this install, modify `configuration/variables.tfvars` This file should be the only thing you need to modify for most setups. 
-It covers stuff such as how many compute nodes you want, how many subnets, what kind of access to the EKS cluster there will be, and a small selection of Kubernetes tools you might want to install after the cluster comes up (a few of my favourites).
+Next, read over and, if you want to customise this install, modify `configuration/variables.tfvars` This file should be the only thing you need to modify for most setups. It covers stuff such as how many compute nodes you want, how many subnets, what kind of access to the EKS cluster there will be, and a small selection of Kubernetes tools you might want to install after the cluster comes up (a few of my favourites).
 
 ---
  
@@ -48,4 +47,23 @@ Now that you’re ready to go, lets initialise this directory using the config f
 `terraform init -backend-config configuration/config.tfvars`
 
 Once that’s finished, you can now run 
+
 `terraform plan -var-file configuration/variables.tfvars`
+
+Terraform’s output should detail all that it plans to build for your new environment. If you are happy with this, Proceed to the next step 
+
+---
+
+### Building and Connecting To Your New Infrastructure 
+
+If you’ve gone through the previous step and want to proceed with what Terraform plans to build, execute
+
+`terraform apply -var-file configuration/variables.tfvars`
+
+Entering `yes`  at the prompt.
+
+This process will take anywhere from 15-25 minutes average, depending on configuration. Just take this time to grab a coffee and let the machine do its thing ☕️.
+
+Once complete, to log into your new environment, just run
+
+`aws eks —region {region} update-kubeconfig —name {cluster_name}`
