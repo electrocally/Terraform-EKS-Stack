@@ -59,8 +59,8 @@ variable "eks" {
     }
 
     networking = {
-      public_access  = true
-      private_access = false
+      public_access       = true
+      private_access      = false
       public_access_cidrs = "0.0.0.0/0"
       public_access_cidrs = "0.0.0.0/0"
 
@@ -97,12 +97,12 @@ variable "modules" {
 
   default = {
     ambassador_api_gateway = {
-      enabled              = true
-      version              = "6.6.0"
+      enabled = true
+      version = "6.6.0"
     }
     cert_manager = {
-      enabled    = true
-      version    = "v1.2.0"
+      enabled = true
+      version = "v1.2.0"
     }
     cilium = {
       enabled           = true
